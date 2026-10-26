@@ -5,18 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Гюльалиев Саидали Феликсович — GULALIEV AND PARTNERS</title>
   <meta name="description" content="Гюльалиев Саидали Феликсович — Архитектор, руководитель архитектурного бюро GULALIEV AND PARTNERS.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #EFECE6;
-      --card: #FAF9F6;
+      --bg: #E8E3DA;
       --ink: #161615;
-      --muted: #575551;
-      --line: #E2DFD7;
+      --muted: #55524D;
       --accent: #D94E1F;
-      --btn-hover: #F0EDE7;
+      --glass-surface: rgba(250, 249, 246, 0.56);
+      --glass-border: rgba(255, 255, 255, 0.72);
+      --btn-glass: rgba(255, 255, 255, 0.42);
+      --btn-glass-hover: rgba(255, 255, 255, 0.68);
+      --btn-border: rgba(255, 255, 255, 0.88);
+      --btn-orange-glass: rgba(217, 78, 31, 0.80);
+      --btn-orange-border: rgba(255, 210, 192, 0.95);
+      --radius-btn: 14px;
+      --radius-card: 24px;
     }
 
     * {
@@ -29,26 +32,80 @@
     body {
       background-color: var(--bg);
       color: var(--ink);
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 28px 16px;
       line-height: 1.45;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Тот самый чистый фон из предыдущей итерации */
+    .ambient-stage {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(42px);
+    }
+
+    .orb-terracotta {
+      width: 240px;
+      height: 240px;
+      background-color: rgba(217, 78, 31, 0.22);
+      top: calc(50% - 260px);
+      right: calc(50% - 210px);
+    }
+
+    .orb-sand {
+      width: 290px;
+      height: 290px;
+      background-color: rgba(255, 252, 245, 0.85);
+      top: calc(50% - 140px);
+      left: calc(50% - 220px);
+    }
+
+    .orb-stone {
+      width: 260px;
+      height: 260px;
+      background-color: rgba(186, 177, 162, 0.45);
+      bottom: calc(50% - 280px);
+      left: calc(50% - 120px);
+    }
+
+    .ambient-grid {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.35;
     }
 
     .sheet {
+      position: relative;
+      z-index: 1;
       width: 100%;
       max-width: 376px;
       min-height: 580px;
-      background: var(--card);
+      background-color: var(--glass-surface);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
       padding: 48px 28px 36px;
-      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: 0 20px 50px rgba(22, 22, 21, 0.08);
+      box-shadow: 0 24px 60px rgba(22, 22, 21, 0.10);
     }
 
     .header-block {
@@ -61,6 +118,7 @@
     .accent-rule {
       width: 28px;
       height: 3px;
+      border-radius: 2px;
       background-color: var(--accent);
       margin-bottom: 24px;
       transform-origin: left center;
@@ -101,25 +159,36 @@
     .action-item:nth-child(4) { animation-delay: 0.30s; }
     .action-item:nth-child(5) { animation-delay: 0.36s; }
 
+    /* Стеклянные кнопки с сохранением всех фирменных анимаций */
     .btn {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 15px 16px;
+      padding: 15px 18px;
       text-decoration: none;
       color: var(--ink);
-      background: var(--card);
-      border: 1px solid var(--line);
+      background-color: var(--btn-glass);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid var(--btn-border);
+      border-radius: var(--radius-btn);
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.18s ease, border-color 0.18s ease, padding-left 0.18s ease;
+      transition:
+        background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.18s ease,
+        transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
       text-align: left;
       overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
+    /* Возвращена анимированная оранжевая линия слева при наведении */
     .btn::before {
       content: "";
       position: absolute;
@@ -130,18 +199,114 @@
       background-color: var(--accent);
       transform: scaleY(0);
       transform-origin: center;
-      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
+      z-index: 2;
     }
 
-    .btn:hover,
-    .btn:active {
-      background: var(--btn-hover);
-      border-color: var(--ink);
+    /* Стеклянный блик по верхней грани кнопки */
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 12px;
+      right: 12px;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.85);
+      pointer-events: none;
+      transition: background-color 0.22s ease;
+      z-index: 2;
     }
 
-    .btn:not(.btn-primary):hover::before,
-    .btn:not(.btn-primary):active::before {
+    .btn-label {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .btn-sub {
+      position: relative;
+      z-index: 2;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.18s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Световая волна оранжевого стекла из точки нажатия */
+    .btn-ripple {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      margin-left: -14px;
+      margin-top: -14px;
+      border-radius: 50%;
+      background-color: rgba(255, 236, 226, 0.38);
+      transform: scale(0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.48s ease;
+    }
+
+    /* Анимация при наведении (живой отклик кнопки, линии и текста) */
+    .btn:hover {
+      background-color: var(--btn-glass-hover);
+      border-color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .btn:not(.btn-primary):hover::before {
       transform: scaleY(1);
+    }
+
+    .btn:not(.btn-primary):hover .btn-label {
+      transform: translateX(3px);
+    }
+
+    .btn:hover .btn-sub {
+      color: var(--ink);
+    }
+
+    /* Анимация нажатия — вспышка оранжевым матовым стеклом */
+    .btn:active,
+    .btn.is-pressed,
+    .btn-primary:active,
+    .btn-primary.is-pressed {
+      background-color: var(--btn-orange-glass);
+      backdrop-filter: blur(24px) saturate(210%);
+      -webkit-backdrop-filter: blur(24px) saturate(210%);
+      border-color: var(--btn-orange-border);
+      color: #FAF9F6;
+      transform: scale(0.978);
+    }
+
+    .btn:active::before,
+    .btn.is-pressed::before {
+      transform: scaleY(1);
+      background-color: #FAF9F6;
+    }
+
+    .btn:active::after,
+    .btn.is-pressed::after {
+      background-color: rgba(255, 235, 224, 0.95);
+    }
+
+    .btn:active .btn-label,
+    .btn.is-pressed .btn-label {
+      transform: translateX(4px);
+    }
+
+    .btn.is-pressed .btn-ripple {
+      transform: scale(15);
+      opacity: 1;
+    }
+
+    .btn:active .btn-sub,
+    .btn.is-pressed .btn-sub {
+      color: rgba(250, 249, 246, 0.95);
     }
 
     .btn:focus-visible {
@@ -149,16 +314,23 @@
       outline-offset: 2px;
     }
 
+    /* Первая кнопка — темное матовое стекло в покое, при нажатии тоже переходит в оранжевое стекло */
     .btn-primary {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: var(--card);
+      background-color: rgba(22, 22, 21, 0.84);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #FAF9F6;
     }
 
-    .btn-primary:hover,
-    .btn-primary:active {
-      background: #2c2c2a;
-      border-color: #2c2c2a;
+    .btn-primary::after {
+      background-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .btn-primary:hover {
+      background-color: rgba(36, 36, 34, 0.92);
+      border-color: rgba(255, 255, 255, 0.42);
+      transform: translateY(-1px);
     }
 
     .btn-plus {
@@ -166,28 +338,21 @@
       font-weight: 600;
       margin-right: 6px;
       display: inline-block;
-      transition: transform 0.2s ease;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), color 0.18s ease;
     }
 
-    .btn-primary:hover .btn-plus,
-    .btn-primary:active .btn-plus {
+    .btn-primary:hover .btn-plus {
       transform: rotate(90deg);
     }
 
-    .btn-sub {
-      font-size: 11px;
-      color: var(--muted);
-      font-family: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-variant-numeric: tabular-nums;
-      transition: color 0.18s ease, transform 0.18s ease;
-    }
-
-    .btn:hover .btn-sub {
-      color: var(--ink);
+    .btn-primary:active .btn-plus,
+    .btn-primary.is-pressed .btn-plus {
+      color: #FAF9F6;
+      transform: rotate(90deg) scale(1.1);
     }
 
     .footer {
-      border-top: 1px solid var(--line);
+      border-top: 1px solid rgba(22, 22, 21, 0.09);
       padding-top: 20px;
       display: flex;
       justify-content: space-between;
@@ -195,7 +360,7 @@
       font-size: 11px;
       letter-spacing: 0.14em;
       color: var(--muted);
-      font-family: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       opacity: 0;
       animation: revealUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
     }
@@ -225,6 +390,20 @@
 </head>
 <body>
 
+  <div class="ambient-stage" aria-hidden="true">
+    <div class="ambient-orb orb-terracotta"></div>
+    <div class="ambient-orb orb-sand"></div>
+    <div class="ambient-orb orb-stone"></div>
+    <svg class="ambient-grid" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <defs>
+        <pattern id="arch-grid" width="64" height="64" patternUnits="userSpaceOnUse">
+          <path d="M 64 0 L 0 0 0 64" fill="none" stroke="#161615" stroke-width="0.5" stroke-opacity="0.12" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#arch-grid)" />
+    </svg>
+  </div>
+
   <main class="sheet">
     <div class="header-block">
       <div class="accent-rule" aria-hidden="true"></div>
@@ -235,33 +414,38 @@
     <div class="actions">
       <div class="action-item">
         <button type="button" class="btn btn-primary" onclick="downloadVCard()">
-          <span><span class="btn-plus">+</span>Добавить в контакты</span>
+          <span class="btn-label"><span class="btn-plus">+</span>Добавить в контакты</span>
+          <span class="btn-ripple" aria-hidden="true"></span>
         </button>
       </div>
 
       <div class="action-item">
         <a id="wa-link" href="https://wa.me/79898851731?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%A1%D0%B0%D0%B8%D0%B4%D0%B0%D0%BB%D0%B8%20%D0%A4%D0%B5%D0%BB%D0%B8%D0%BA%D1%81%D0%BE%D0%B2%D0%B8%D1%87!" target="_blank" rel="noopener" class="btn">
-          <span>Написать в WhatsApp</span>
+          <span class="btn-label">Написать в WhatsApp</span>
+          <span class="btn-ripple" aria-hidden="true"></span>
         </a>
       </div>
 
       <div class="action-item">
         <a id="tg-app-link" href="tg://resolve?domain=gulaliev" class="btn">
-          <span>Написать в Телеграм</span>
+          <span class="btn-label">Написать в Телеграм</span>
+          <span class="btn-ripple" aria-hidden="true"></span>
         </a>
       </div>
 
       <div class="action-item">
         <a id="tel-link" href="tel:+79898851731" class="btn">
-          <span>Позвонить</span>
+          <span class="btn-label">Позвонить</span>
           <span class="btn-sub" id="phone-label">+7 (989) 885-17-31</span>
+          <span class="btn-ripple" aria-hidden="true"></span>
         </a>
       </div>
 
       <div class="action-item">
         <a id="mail-link" href="mailto:saidali-92@mail.ru" class="btn">
-          <span>Написать на почту</span>
+          <span class="btn-label">Написать на почту</span>
           <span class="btn-sub" id="mail-label">saidali-92@mail.ru</span>
+          <span class="btn-ripple" aria-hidden="true"></span>
         </a>
       </div>
     </div>
@@ -285,6 +469,31 @@
       email: "saidali-92@mail.ru",
       website: "https://gulaliev.ru"
     };
+
+    document.querySelectorAll(".btn").forEach((btn) => {
+      let releaseTimer = null;
+
+      btn.addEventListener("pointerdown", (e) => {
+        if (releaseTimer) clearTimeout(releaseTimer);
+        const rect = btn.getBoundingClientRect();
+        const ripple = btn.querySelector(".btn-ripple");
+        if (ripple) {
+          ripple.style.left = (e.clientX - rect.left) + "px";
+          ripple.style.top = (e.clientY - rect.top) + "px";
+        }
+        btn.classList.add("is-pressed");
+      });
+
+      const release = () => {
+        releaseTimer = setTimeout(() => {
+          btn.classList.remove("is-pressed");
+        }, 380);
+      };
+
+      btn.addEventListener("pointerup", release);
+      btn.addEventListener("pointerleave", release);
+      btn.addEventListener("pointercancel", release);
+    });
 
     function downloadVCard() {
       const vcf = [
