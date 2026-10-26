@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Гюльалиев Саидали Феликсович — GULALIEV AND PARTNERS</title>
+  <meta name="description" content="Гюльалиев Саидали Феликсович — Архитектор, руководитель архитектурного бюро GULALIEV AND PARTNERS.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #EFECE6;
+      --card: #FAF9F6;
+      --ink: #161615;
+      --muted: #575551;
+      --line: #E2DFD7;
+      --accent: #D94E1F;
+      --btn-hover: #F0EDE7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      line-height: 1.45;
+    }
+
+    .sheet {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      padding: 36px 28px 28px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(22, 22, 21, 0.08);
+    }
+
+    /* Эффект 1: Тонкая архитектурная засечка в правом верхнем углу, прорисовывающаяся при загрузке */
+    .corner-mark {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+
+    .corner-mark path {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 1.25;
+      stroke-dasharray: 32;
+      stroke-dashoffset: 32;
+      animation: drawCorner 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    }
+
+    .header-block {
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: revealUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+    }
+
+    /* Эффект 2: Плавная прорисовка терракотового штриха слева направо */
+    .accent-rule {
+      width: 28px;
+      height: 3px;
+      background-color: var(--accent);
+      margin-bottom: 20px;
+      transform-origin: left center;
+      transform: scaleX(0);
+      animation: drawRule 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+    }
+
+    h1 {
+      font-size: 23px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    /* Эффект 3: Каскадное появление строк и тактильный отклик со скользящим штрихом слева */
+    .action-item {
+      opacity: 0;
+      transform: translateY(8px);
+      animation: revealUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .action-item:nth-child(1) { animation-delay: 0.12s; }
+    .action-item:nth-child(2) { animation-delay: 0.18s; }
+    .action-item:nth-child(3) { animation-delay: 0.24s; }
+    .action-item:nth-child(4) { animation-delay: 0.30s; }
+    .action-item:nth-child(5) { animation-delay: 0.36s; }
+
+    .btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--card);
+      border: 1px solid var(--line);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, padding-left 0.18s ease;
+      text-align: left;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: var(--accent);
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .btn:hover,
+    .btn:active {
+      background: var(--btn-hover);
+      border-color: var(--ink);
+    }
+
+    .btn:not(.btn-primary):hover::before,
+    .btn:not(.btn-primary):active::before {
+      transform: scaleY(1);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--card);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:active {
+      background: #2c2c2a;
+      border-color: #2c2c2a;
+    }
+
+    .btn-plus {
+      color: var(--accent);
+      font-weight: 600;
+      margin-right: 6px;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-primary:hover .btn-plus,
+    .btn-primary:active .btn-plus {
+      transform: rotate(90deg);
+    }
+
+    .btn-sub {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .btn:hover .btn-sub {
+      color: var(--ink);
+    }
+
+    .tg-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .btn-copy {
+      padding: 14px 12px;
+      font-size: 12px;
+      font-family: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
+      white-space: nowrap;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      font-family: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
+      opacity: 0;
+      animation: revealUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--card);
+      padding: 10px 18px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    @keyframes drawRule {
+      to { transform: scaleX(1); }
+    }
+
+    @keyframes drawCorner {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes revealUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .header-block,
+      .accent-rule,
+      .action-item,
+      .footer,
+      .corner-mark path {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        stroke-dashoffset: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="sheet">
+    <svg class="corner-mark" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M0 1 H15 V16" />
+    </svg>
+
+    <div class="header-block">
+      <div class="accent-rule" aria-hidden="true"></div>
+      <h1>Гюльалиев Саидали Феликсович</h1>
+      <p class="subtitle">Архитектор, руководитель архитектурного бюро</p>
+    </div>
+
+    <div class="actions">
+      <div class="action-item">
+        <button type="button" class="btn btn-primary" onclick="downloadVCard()">
+          <span><span class="btn-plus">+</span>Добавить в контакты</span>
+        </button>
+      </div>
+
+      <div class="action-item">
+        <a id="wa-link" href="https://wa.me/79898851731?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%A1%D0%B0%D0%B8%D0%B4%D0%B0%D0%BB%D0%B8%20%D0%A4%D0%B5%D0%BB%D0%B8%D0%BA%D1%81%D0%BE%D0%B2%D0%B8%D1%87!" target="_blank" rel="noopener" class="btn">
+          <span>Написать в WhatsApp</span>
+          <span class="btn-sub">Чат →</span>
+        </a>
+      </div>
+
+      <div class="action-item tg-row">
+        <a id="tg-app-link" href="tg://resolve?domain=gulaliev" class="btn">
+          <span>Открыть Telegram</span>
+          <span class="btn-sub" id="tg-handle-label">@gulaliev</span>
+        </a>
+        <button type="button" class="btn btn-copy" onclick="copyTg()" title="Скопировать ник">
+          Копировать
+        </button>
+      </div>
+
+      <div class="action-item">
+        <a id="tel-link" href="tel:+79898851731" class="btn">
+          <span>Позвонить</span>
+          <span class="btn-sub" id="phone-label">+7 (989) 885-17-31</span>
+        </a>
+      </div>
+
+      <div class="action-item">
+        <a id="mail-link" href="mailto:saidali-92@mail.ru" class="btn">
+          <span>Написать на почту</span>
+          <span class="btn-sub" id="mail-label">saidali-92@mail.ru</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>GULALIEV AND PARTNERS</span>
+    </div>
+  </main>
+
+  <div id="toast" class="toast">Ник @gulaliev скопирован</div>
+
+  <script>
+    const CONTACT = {
+      firstName: "Саидали",
+      middleName: "Феликсович",
+      lastName: "Гюльалиев",
+      org: "GULALIEV AND PARTNERS",
+      title: "Архитектор, руководитель архитектурного бюро",
+      phoneClean: "+79898851731",
+      phoneDisplay: "+7 (989) 885-17-31",
+      whatsappNumber: "79898851731",
+      telegramUser: "gulaliev",
+      email: "saidali-92@mail.ru",
+      website: "https://gulaliev.ru"
+    };
+
+    function copyTg() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText("@" + CONTACT.telegramUser).then(showToast).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+    }
+
+    function fallbackCopy() {
+      const temp = document.createElement("textarea");
+      temp.value = "@" + CONTACT.telegramUser;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+      setTimeout(function() {
+        toast.classList.remove("show");
+      }, 2200);
+    }
+
+    function downloadVCard() {
+      const vcf = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "N:" + CONTACT.lastName + ";" + CONTACT.firstName + ";" + CONTACT.middleName + ";;",
+        "FN:" + CONTACT.lastName + " " + CONTACT.firstName + " " + CONTACT.middleName,
+        "ORG:" + CONTACT.org,
+        "TITLE:" + CONTACT.title,
+        "TEL;TYPE=CELL,VOICE:" + CONTACT.phoneClean,
+        "EMAIL;TYPE=WORK,INTERNET:" + CONTACT.email,
+        "URL:" + CONTACT.website,
+        "NOTE:GULALIEV AND PARTNERS. Telegram: @" + CONTACT.telegramUser,
+        "END:VCARD"
+      ].join("\r\n");
+
+      const blob = new Blob([vcf], { type: "text/vcard;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Saidali_Gyulaliev.vcf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
