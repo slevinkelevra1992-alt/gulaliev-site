@@ -47,25 +47,6 @@
       box-shadow: 0 20px 50px rgba(22, 22, 21, 0.08);
     }
 
-    /* Эффект 1: Тонкая архитектурная засечка в правом верхнем углу, прорисовывающаяся при загрузке */
-    .corner-mark {
-      position: absolute;
-      top: 18px;
-      right: 18px;
-      width: 16px;
-      height: 16px;
-      pointer-events: none;
-    }
-
-    .corner-mark path {
-      fill: none;
-      stroke: var(--line);
-      stroke-width: 1.25;
-      stroke-dasharray: 32;
-      stroke-dashoffset: 32;
-      animation: drawCorner 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
-    }
-
     .header-block {
       margin-bottom: 28px;
       opacity: 0;
@@ -73,7 +54,6 @@
       animation: revealUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
     }
 
-    /* Эффект 2: Плавная прорисовка терракотового штриха слева направо */
     .accent-rule {
       width: 28px;
       height: 3px;
@@ -105,7 +85,6 @@
       margin-bottom: 28px;
     }
 
-    /* Эффект 3: Каскадное появление строк и тактильный отклик со скользящим штрихом слева */
     .action-item {
       opacity: 0;
       transform: translateY(8px);
@@ -253,10 +232,6 @@
       to { transform: scaleX(1); }
     }
 
-    @keyframes drawCorner {
-      to { stroke-dashoffset: 0; }
-    }
-
     @keyframes revealUp {
       to {
         opacity: 1;
@@ -268,12 +243,10 @@
       .header-block,
       .accent-rule,
       .action-item,
-      .footer,
-      .corner-mark path {
+      .footer {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
-        stroke-dashoffset: 0 !important;
       }
     }
   </style>
@@ -281,10 +254,6 @@
 <body>
 
   <main class="sheet">
-    <svg class="corner-mark" viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M0 1 H15 V16" />
-    </svg>
-
     <div class="header-block">
       <div class="accent-rule" aria-hidden="true"></div>
       <h1>Гюльалиев Саидали Феликсович</h1>
@@ -301,7 +270,6 @@
       <div class="action-item">
         <a id="wa-link" href="https://wa.me/79898851731?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%A1%D0%B0%D0%B8%D0%B4%D0%B0%D0%BB%D0%B8%20%D0%A4%D0%B5%D0%BB%D0%B8%D0%BA%D1%81%D0%BE%D0%B2%D0%B8%D1%87!" target="_blank" rel="noopener" class="btn">
           <span>Написать в WhatsApp</span>
-          <span class="btn-sub">Чат →</span>
         </a>
       </div>
 
